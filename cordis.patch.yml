@@ -1,0 +1,46 @@
+# dsh-pitfall-memory 的 bundle 补丁层：向 profile 插入一行「踩坑记忆」插件。
+# 行内 config 就是这个插件的行配置；改这里的字段即可调整行为，
+# 也可以在 profile 的 cordis.patch.yml 里按同 id 覆盖。
+- insert:
+    - id: pitfall-memory
+      name: dsh-pitfall-memory
+      config:
+        # 总开关；false 时插件完全不动作。
+        enabled: true
+
+        # 首次运行（经验库为空）时写入本机已知坑的种子经验。
+        seed: true
+
+        # 三级总结：会话结束写会话总结，并按天/周补生成日总结与周总结。
+        summaries: true
+
+        # 是否自动捕获工具失败。
+        capture: true
+
+        # 会话第一次模型请求前注入经验简报（pre-step，晚加载也能生效）。
+        inject: true
+        # 注入条数上限与字节上限（避免挤占上下文）。
+        maxLessons: 12
+        maxInjectBytes: 6000
+        # 同一坑至少要出现过几次才注入；1 表示首次踩到就记。
+        minOccurrences: 1
+        # 是否也给子代理会话注入（默认否，子代理继承父会话的任务上下文）。
+        injectIntoSubagents: false
+
+        # 同一会话内再次踩到同一个坑时，追加一条一句话提醒。
+        repeatWarn: true
+
+        # 只注入「本项目」与「全局」经验；false 时注入所有项目。
+        projectScoped: true
+
+        # 每次会话最多捕获多少条失败（防止超长会话刷爆存储）。
+        maxFindingsPerSession: 200
+
+        # 经验库保留条数上限；手动记录的经验不会被淘汰。
+        maxLessonsStored: 300
+
+        # 存储目录；留空 = <profile>/.dsh-pitfall-memory
+        storeDir: ""
+
+        # 失败判定的工具白名单（留空 = 全部工具）。
+        captureTools: []
