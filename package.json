@@ -1,0 +1,48 @@
+{
+  "name": "dsh-pitfall-memory",
+  "version": "0.4.0",
+  "description": "Long-term failure memory for DeepSeek Harness: captures tool failures, folds them into reusable lessons with session/daily/weekly summaries, and injects a briefing into later sessions.",
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "scripts",
+    "test",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node test/detect.test.mjs && node test/store.test.mjs && node test/render.test.mjs && node test/summary.test.mjs && node test/smoke.test.mjs && node test/settings-api.test.mjs && node test/client.test.mjs",
+    "install:profile": "node scripts/install.mjs",
+    "doctor": "node scripts/doctor.mjs"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "memory",
+    "lessons",
+    "pitfall",
+    "retrospective"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": ["slots"],
+      "platform": "web"
+    }
+  }
+}
